@@ -1,35 +1,26 @@
-import React, { HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'violet' | 'success' | 'outline';
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "default" | "violet" | "success" | "outline";
 }
 
-export const Badge: React.FC<BadgeProps> = ({
-  className,
-  variant = 'default',
-  children,
-  ...props
-}) => {
+export function Badge({ className, variant = "default", ...props }: BadgeProps) {
+  // Warp-inspired clean badges (no translucent gradients)
   const variants = {
-    default: "bg-primary-light/50 text-accent-cyan border-accent-cyan/20",
-    violet: "bg-accent-violet/10 text-accent-violet border-accent-violet/20",
-    success: "bg-success/10 text-success border-success/20",
-    outline: "bg-transparent border-border text-text-muted",
+    default: "bg-canvas-soft text-ink border border-hairline",
+    violet: "bg-surface text-accent-violet border border-hairline",
+    success: "bg-surface text-success border border-hairline",
+    outline: "bg-transparent text-text-muted border border-hairline"
   };
 
   return (
-    <span
+    <div
       className={cn(
-        "inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium",
+        "inline-flex items-center rounded-[3px] px-2.5 py-0.5 text-[12px] font-medium transition-colors",
         variants[variant],
         className
       )}
       {...props}
-    >
-      {children}
-    </span>
+    />
   );
-};
-
-export default Badge;
+}
